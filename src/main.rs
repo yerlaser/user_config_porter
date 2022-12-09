@@ -36,7 +36,7 @@ fn main() {
     }
     println!("Hello, {}!", name.capitalize());
 
-    let filename = "test.toml";
+    let filename = "user_config.toml";
     let content = match fs::read_to_string(filename) {
         Ok(c) => c,
         Err(_) => {
