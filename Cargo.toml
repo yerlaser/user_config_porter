@@ -1,0 +1,9 @@
+[package]
+name = "user_config_porter"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+clap = { version = "*", features = ["derive"] }
+serde = { version = "*", features = ["derive"] }
+toml = "*"
