@@ -3,8 +3,7 @@ use serde::Deserialize;
 use std::fs;
 use std::process::exit;
 use toml;
-use utils::readln;
-use utils::StringExt;
+use utils::{readln, StringExt};
 
 mod utils;
 
