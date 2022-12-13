@@ -18,13 +18,15 @@ struct Args {
 
 #[derive(Deserialize)]
 struct Data {
-    config: Config,
+    commands: Commands,
 }
 
 #[derive(Deserialize)]
-struct Config {
-    ip: String,
-    port: Option<u16>,
+struct Commands {
+    name: String,
+    command_type: String,
+    key: String,
+    value: String,
 }
 
 fn main() {
@@ -50,7 +52,11 @@ fn main() {
             exit(1);
         }
     };
-    let ip = data.config.ip;
-    let port = data.config.port.unwrap_or(80);
-    println!("IP: {ip}, PORT: {port}");
+    let Commands {
+        name,
+        command_type,
+        key,
+        value,
+    } = data.commands;
+    println!("Name: {name}, Command Type: {command_type}, Key: {key}, Value: {value}");
 }
