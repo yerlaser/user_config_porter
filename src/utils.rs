@@ -1,3 +1,6 @@
+use clap::Parser;
+use serde::Deserialize;
+
 macro_rules! readln {
     ($message: expr, $receiver: expr) => {{
         use std::io::{stdin, stdout, Write};
@@ -41,4 +44,26 @@ impl StringExt for &str {
             Some(f) => f.to_uppercase().collect::<String>() + c.as_str(),
         }
     }
+}
+
+/// User configuration porter
+#[derive(Parser, Debug)]
+#[command(author, version, about, long_about = None)]
+pub struct Args {
+    /// Name to greet
+    #[arg(short, long, default_value_t = String::from(""))]
+    pub name: String,
+}
+
+#[derive(Deserialize)]
+pub struct Data {
+    pub commands: Commands,
+}
+
+#[derive(Deserialize)]
+pub struct Commands {
+    pub name: String,
+    pub command_type: String,
+    pub key: String,
+    pub value: String,
 }
