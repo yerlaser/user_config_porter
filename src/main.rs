@@ -9,8 +9,12 @@ mod utils;
 fn main() {
     let args = Args::parse();
     let mut name = args.name;
-    if name.len() < 1 {
+    if name.is_empty() {
         readln!("Enter name: ", &mut name);
+        if name.is_empty() {
+            eprintln!("Ok, I will call you World");
+            name = String::from("world");
+        }
     }
     let name = name.capitalize();
     println!("Hello, {name}!");
