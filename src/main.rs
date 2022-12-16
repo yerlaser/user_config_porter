@@ -2,35 +2,24 @@ use clap::Parser;
 use std::fs;
 use std::process::exit;
 use toml;
-use utils::{readln, Args, Commands, Data, StringExt};
+use utils::{Args, Commands, Data};
 
 mod utils;
 
 fn main() {
     let args = Args::parse();
-    let mut name = args.name;
-    if name.is_empty() {
-        readln!("Enter name: ", &mut name);
-        if name.is_empty() {
-            eprintln!("Ok, I will call you World");
-            name = String::from("world");
-        }
-    }
-    let name = name.capitalize();
-    println!("Hello, {name}!");
-
-    let filename = "user_config.toml";
-    let content = match fs::read_to_string(filename) {
+    let config_file = args.config_file;
+    let content = match fs::read_to_string(&config_file) {
         Ok(c) => c,
         Err(_) => {
-            eprintln!("Could not read file: {filename}");
+            eprintln!("Could not read file: {config_file}");
             exit(1);
         }
     };
     let data: Data = match toml::from_str(&content) {
         Ok(d) => d,
         Err(_) => {
-            eprintln!("Could not parse file: {filename}");
+            eprintln!("Could not parse file: {config_file}");
             exit(1);
         }
     };

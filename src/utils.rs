@@ -1,6 +1,7 @@
 use clap::Parser;
 use serde::Deserialize;
 
+#[allow(unused_macros)]
 macro_rules! readln {
     ($message: expr, $receiver: expr) => {{
         use std::io::{stdin, stdout, Write};
@@ -20,7 +21,7 @@ macro_rules! readln {
     }};
 }
 
-pub(crate) use readln;
+// pub(crate) use readln;
 
 pub trait StringExt {
     fn capitalize(&self) -> String;
@@ -50,9 +51,9 @@ impl StringExt for &str {
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
 pub struct Args {
-    /// Name to greet
-    #[arg(short, long, default_value_t = String::from(""))]
-    pub name: String,
+    /// Configuration file
+    #[arg(short, long, default_value_t = String::from("user_config.toml"))]
+    pub config_file: String,
 }
 
 #[derive(Deserialize)]
