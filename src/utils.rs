@@ -57,12 +57,12 @@ pub struct Args {
 }
 
 #[derive(Deserialize)]
-pub struct Data {
-    pub commands: Commands,
+pub struct Commands {
+    pub commands: Vec<Command>,
 }
 
 #[derive(Deserialize)]
-pub struct Commands {
+pub struct Command {
     pub name: String,
     pub command_type: String,
     pub key: String,
