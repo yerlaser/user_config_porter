@@ -35,11 +35,11 @@ fn main() {
 
         println!("Name: {name}, Command Type: {command_type}, Key: {key}, Value: {value}");
     }
+
     let output = Command::new("cat")
         .arg(&config_file)
         .output()
-        .expect("Error reading file")
-        .stdout;
-    let output = String::from_utf8(output).unwrap();
+        .expect(&format!("Could not read file: {config_file}"));
+    let output = String::from_utf8(output.stdout).unwrap_or_default();
     println!("Original file content is:\n\n{output}");
 }
