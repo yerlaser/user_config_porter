@@ -1,8 +1,8 @@
 use clap::Parser;
 use std::fs;
-use std::process::exit;
+use std::process::{exit, Command};
 use toml;
-use utils::{Args, Command, Commands};
+use utils::{Args, ConfigCommand, ConfigCommands};
 
 mod utils;
 
@@ -17,7 +17,7 @@ fn main() {
         }
     };
 
-    let config: Commands = match toml::from_str(&content) {
+    let config: ConfigCommands = match toml::from_str(&content) {
         Ok(d) => d,
         Err(_) => {
             eprintln!("Could not parse file: {config_file}");
@@ -26,7 +26,7 @@ fn main() {
     };
 
     for command in config.commands {
-        let Command {
+        let ConfigCommand {
             name,
             command_type,
             key,
@@ -35,4 +35,11 @@ fn main() {
 
         println!("Name: {name}, Command Type: {command_type}, Key: {key}, Value: {value}");
     }
+    let output = Command::new("cat")
+        .arg(&config_file)
+        .output()
+        .expect("Error reading file")
+        .stdout;
+    let output = String::from_utf8(output).unwrap();
+    println!("Original file content is:\n\n{output}");
 }
